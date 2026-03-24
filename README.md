@@ -60,8 +60,18 @@ PREDICTIONS (reliable, explainable, documented)
 ```
 student-performance-predictor/
 │
+├── images/
+│   ├── 01_finalscore_distribution.png
+│   ├── 02_attendance_vs_finalscore.png
+│   ├── 03_studyhours_vs_finalscore.png
+│   ├── 04_midterm_vs_finalscore.png
+│   ├── 05_correlation_heatmap.png
+│   ├── 06_finalscore_by_department.png
+│   ├── 07_students_per_department.png
+│   └── 08_actual_vs_predicted.png
+|
 ├── data/
-│   └── cleaned_student_performance_dataset.xlsx        ← cleaned dataset used for modeling
+│   ├── cleaned_student_performance_dataset.xlsx        ← cleaned dataset used for modeling
 |   └── student_performance_dataset.xlsx        ← messy dataset for pipeline
 │
 ├── notebooks/
@@ -69,6 +79,7 @@ student-performance-predictor/
 │   ├── 02_visualizations_EDA.ipynb  ← Step 3
 │   └── 03_feature_engineering_&_model_eval.ipynb  ← Step 4 and Step 5
 │
+├── model_evaluation_report.pdf
 ├── requirements.txt
 └── README.md
 ```
@@ -145,7 +156,7 @@ df.drop_duplicates(inplace=True)
 
 ![Final Score Distribution](charts/01_finalscore_distribution.png)
 
-> The distribution of Final_Score is approximately normal, centered around the mid-60s to low-70s range. Most students score between 55 and 85, with very few extreme outliers on either end.
+> The distribution of Final_Score is approximately normal, centered around the mid-40s to low-60s range. Most students score between 42.5 and 55, with very few extreme outliers on either end.
 
 </details>
 
@@ -185,7 +196,7 @@ df.drop_duplicates(inplace=True)
 
 ![Correlation Heatmap](charts/05_correlation_heatmap.png)
 
-> Midterm, Study_Hours_Daily and Attendance_% show the highest positive correlation with Final_Score. Student_ID shows near-zero correlation confirming it carries no predictive value and should be dropped.
+> Midterm, Study_Hours_Daily and Attendance_% show the highest positive correlation with Final_Score. Student_ID and age shows near-zero correlation confirming it carries no predictive value and should be dropped.
 
 </details>
 
@@ -205,7 +216,7 @@ df.drop_duplicates(inplace=True)
 
 ![Students per Department](charts/07_students_per_department.png)
 
-> The dataset is reasonably balanced across departments with no extreme underrepresentation. This ensures the model does not develop a bias toward any particular department during training.
+> The dataset is reasonably balanced across departments with no extreme underrepresentation. This ensures the model does not develop a bias toward any particular department during training. The most populated department is EE(Electrical Engineering) while the least populated is ME(Mechanical Engineering)
 
 </details>
 
@@ -256,8 +267,8 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                                                         │
-│   Training Records    →   146                           │
-│   Testing Records     →   46                            │
+│   Training Records    →   160                           │
+│   Testing Records     →   40                            │
 │                                                         │
 │   MAE                 →   2.44   (~3 marks average)     │
 │   RMSE                →   3.26   (penalizes big errors) │
@@ -279,6 +290,21 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 **R² of 0.60** — the model explains 60% of the variance in Final_Score. Solid for a Linear Regression on a noisy real-world dataset. The remaining 40% is influenced by factors not captured — class participation, personal circumstances, teaching quality.
 
 **Key drivers identified:** Attendance percentage, Study_Hours_Daily, and Midterm score carry the highest positive coefficients — the strongest predictors of a student's final score.
+
+<details>
+<summary><b>🎯 Actual vs Predicted — Final Score Scatter Plot</b></summary>
+<br/>
+
+![Actual vs Predicted](images/08_actual_vs_predicted.png)
+
+> Blue dots represent actual student scores. Red crosses are the model's predictions.
+> Points clustered close to the diagonal indicate accurate predictions — the tighter
+> the cluster, the better the model. Scattered outliers represent students whose
+> performance was harder to predict from the available features alone.
+
+</details>
+
+📄 **[Download Full Evaluation Report (PDF)](model_evaluation_report.pdf)**
 
 ---
 
