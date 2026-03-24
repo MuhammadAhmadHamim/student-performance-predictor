@@ -122,7 +122,7 @@ df['Age'] = pd.to_numeric(df['Age'], errors='coerce')
 df['Age'].fillna(df['Age'].median(), inplace=True)
 
 # 5. Impossible Attendance — below 0 or above 100 → NaN → median
-df['Attendance_%'] = df['Attendance_%'].mask((df['Attendance_%'] > 100) | (df['Attendance_%'] < 0), np.nan)
+df['Attendance_%']=df['Attendance_%'].mask((df['Attendance_%'] > 100) | (df['Attendance_%'] < 0),np.nan)
 df['Attendance_%'] = df['Attendance_%'].fillna(df['Attendance_%'].median())
 
 # 6. Impossible Final_Score — above 100 → NaN → median
@@ -139,15 +139,75 @@ df.drop_duplicates(inplace=True)
 
 **7 visualizations. Every chart interpreted. 3 actionable insights extracted.**
 
-| Chart | What It Shows |
-|:---:|:---|
-| Histplot | Distribution of Final_Score across all students |
-| Scatter | Attendance_% vs Final_Score |
-| Scatter | Study_Hours_Daily vs Final_Score |
-| Scatter | Midterm vs Final_Score |
-| Heatmap | Correlation matrix of all numerical columns |
-| Boxplot | Final_Score grouped by Department |
-| Countplot | Student count per Department |
+<details>
+<summary><b>📊 Chart 1 — Distribution of Final Score</b></summary>
+<br/>
+
+![Final Score Distribution](charts/01_finalscore_distribution.png)
+
+> The distribution of Final_Score is approximately normal, centered around the mid-60s to low-70s range. Most students score between 55 and 85, with very few extreme outliers on either end.
+
+</details>
+
+<details>
+<summary><b>📈 Chart 2 — Attendance % vs Final Score</b></summary>
+<br/>
+
+![Attendance vs Final Score](charts/02_attendance_vs_finalscore.png)
+
+> A positive correlation is visible — students with higher attendance tend to score higher. The trend is consistent though scattered, suggesting attendance is a contributor but not the sole driver.
+
+</details>
+
+<details>
+<summary><b>📈 Chart 3 — Study Hours vs Final Score</b></summary>
+<br/>
+
+![Study Hours vs Final Score](charts/03_studyhours_vs_finalscore.png)
+
+> Students who study more hours daily generally achieve higher final scores. The relationship is positive and moderately strong — one of the cleaner correlations in the dataset.
+
+</details>
+
+<details>
+<summary><b>📈 Chart 4 — Midterm vs Final Score</b></summary>
+<br/>
+
+![Midterm vs Final Score](charts/04_midterm_vs_finalscore.png)
+
+> Midterm score shows the strongest individual correlation with Final_Score. Students who perform well in midterms almost consistently perform well overall — making it the single most predictive feature.
+
+</details>
+
+<details>
+<summary><b>🔥 Chart 5 — Correlation Heatmap</b></summary>
+<br/>
+
+![Correlation Heatmap](charts/05_correlation_heatmap.png)
+
+> Midterm, Study_Hours_Daily and Attendance_% show the highest positive correlation with Final_Score. Student_ID shows near-zero correlation confirming it carries no predictive value and should be dropped.
+
+</details>
+
+<details>
+<summary><b>📦 Chart 6 — Final Score by Department</b></summary>
+<br/>
+
+![Final Score by Department](charts/06_finalscore_by_department.png)
+
+> Median scores are relatively consistent across departments with slight variation. No single department dramatically outperforms others suggesting Final_Score is driven more by individual habits than department affiliation.
+
+</details>
+
+<details>
+<summary><b>🔢 Chart 7 — Students per Department</b></summary>
+<br/>
+
+![Students per Department](charts/07_students_per_department.png)
+
+> The dataset is reasonably balanced across departments with no extreme underrepresentation. This ensures the model does not develop a bias toward any particular department during training.
+
+</details>
 
 ---
 
@@ -199,8 +259,8 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 │   Training Records    →   146                           │
 │   Testing Records     →   46                            │
 │                                                         │
-│   MAE                 →   2.77   (~3 marks average)     │
-│   RMSE                →   3.50   (penalizes big errors) │
+│   MAE                 →   2.44   (~3 marks average)     │
+│   RMSE                →   3.26   (penalizes big errors) │
 │   R² Score            →   0.60  (60% variance explained)│
 │                                                         │
 │   Intercept           →   ~18    (baseline prediction)  │
@@ -212,9 +272,9 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 
 **What the numbers mean:**
 
-**MAE of 2.77** — on average the model's prediction is within ~3 marks of the actual final score. For a student scoring 75, the model likely predicts between 72 and 78.
+**MAE of 2.44** — on average the model's prediction is within ~3 marks of the actual final score. For a student scoring 75, the model likely predicts between 72 and 78.
 
-**RMSE of 3.5** — slightly higher than MAE because larger errors get penalized more heavily when squared. The gap between MAE and RMSE is small, meaning there are no catastrophic outlier predictions.
+**RMSE of 3.26** — slightly higher than MAE because larger errors get penalized more heavily when squared. The gap between MAE and RMSE is small, meaning there are no catastrophic outlier predictions.
 
 **R² of 0.60** — the model explains 60% of the variance in Final_Score. Solid for a Linear Regression on a noisy real-world dataset. The remaining 40% is influenced by factors not captured — class participation, personal circumstances, teaching quality.
 
