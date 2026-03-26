@@ -60,7 +60,7 @@ PREDICTIONS (reliable, explainable, documented)
 ```
 student-performance-predictor/
 │
-├── images/
+├── charts/
 │   ├── 01_finalscore_distribution.png
 │   ├── 02_attendance_vs_finalscore.png
 │   ├── 03_studyhours_vs_finalscore.png
@@ -216,7 +216,7 @@ df.drop_duplicates(inplace=True)
 
 ![Students per Department](charts/07_students_per_department.png)
 
-> The dataset is reasonably balanced across departments with no extreme underrepresentation. This ensures the model does not develop a bias toward any particular department during training. The most populated department is EE(Electrical Engineering) while the least populated is ME(Mechanical Engineering)
+> The dataset is reasonably balanced across departments with no extreme underrepresentation. This ensures the model does not develop a bias toward any particular department during training. The most populated department is EE (Electrical Engineering) while the least populated is ME (Mechanical Engineering)
 
 </details>
 
