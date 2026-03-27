@@ -295,7 +295,7 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 <summary><b>🎯 Actual vs Predicted — Final Score Scatter Plot</b></summary>
 <br/>
 
-![Actual vs Predicted](images/08_actual_vs_predicted.png)
+![Actual vs Predicted](charts/08_actual_vs_predicted.png)
 
 > Blue dots represent actual student scores. Red crosses are the model's predictions.
 > Points clustered close to the diagonal indicate accurate predictions — the tighter
@@ -304,7 +304,7 @@ Both manual preprocessing and sklearn ColumnTransformer Pipeline were implemente
 
 </details>
 
-📄 **[Download Full Evaluation Report (PDF)](model_evaluation_report.pdf)**
+📄 **[Check the Full Evaluation Report (PDF)](model_evaluation_report.pdf)**
 
 ---
 
