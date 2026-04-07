@@ -133,7 +133,9 @@ df['Age'] = pd.to_numeric(df['Age'], errors='coerce')
 df['Age'].fillna(df['Age'].median(), inplace=True)
 
 # 5. Impossible Attendance — below 0 or above 100 → NaN → median
-df['Attendance_%']=df['Attendance_%'].mask((df['Attendance_%'] > 100) | (df['Attendance_%'] < 0),np.nan)
+df['Attendance_%']=df['Attendance_%'].mask(
+      (df['Attendance_%'] > 100) | (df['Attendance_%'] < 0),np.nan
+)
 df['Attendance_%'] = df['Attendance_%'].fillna(df['Attendance_%'].median())
 
 # 6. Impossible Final_Score — above 100 → NaN → median
